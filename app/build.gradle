@@ -93,7 +93,7 @@ ext {
     rxKotlinVersion = "2.2.0"
     rxAndroidVersion = "2.0.1"
     rxJavaVersion = "2.2.3"
-    timberVersion = "4.5.1"
+    timberVersion = "4.7.1"
 }
 
 dependencies {
@@ -112,6 +112,7 @@ dependencies {
     //Support
     implementation "com.android.support:appcompat-v7:$supportVersion"
     implementation "com.android.support:multidex:$multiDexVersion"
+    implementation "com.android.support:design:$supportVersion"
     implementation "com.android.support:recyclerview-v7:$supportVersion"
     implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
 
@@ -128,7 +129,8 @@ dependencies {
     //Dagger
     implementation "com.google.dagger:dagger-android:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     //Parsing
     implementation "com.squareup.moshi:moshi:$moshiVersion"
