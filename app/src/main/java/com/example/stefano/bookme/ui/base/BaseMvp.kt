@@ -9,6 +9,6 @@ interface BaseMvp {
     }
 
     interface Presenter {
-
+        fun init()
     }
 }
