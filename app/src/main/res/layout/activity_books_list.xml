@@ -6,20 +6,35 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".ui.booksList.BooksListActivity">
 
     <include layout="@layout/toolbar"/>
 
     <include layout="@layout/progress"/>
 
+    <EditText
+        android:id="@+id/searchInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="@string/search_hint"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:ignore="UnknownIdInLayout"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/booksRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/searchInput"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         tools:ignore="UnknownIdInLayout"/>
 
 </android.support.constraint.ConstraintLayout>

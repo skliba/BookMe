@@ -30,7 +30,7 @@ class BookApplication : MultiDexApplication(), HasActivityInjector {
         initVectorGraphics()
         initThreeTen()
         initDagger()
-        initPolicies()
+        //initPolicies()
         initTimber()
     }
 

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BookMe</string>
+    <string name="search_hint">Book name you wish to search for</string>
 </resources>

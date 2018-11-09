@@ -29,8 +29,8 @@ abstract class BaseActivity : AppCompatActivity(), BaseMvp.View {
         presenter = providePresenter()
     }
 
-    override fun showError(message: String) {
-        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
+    override fun showError(message: String?) {
+        Snackbar.make(findViewById(android.R.id.content), message!!, Snackbar.LENGTH_LONG)
     }
 
     override fun showProgress() {
