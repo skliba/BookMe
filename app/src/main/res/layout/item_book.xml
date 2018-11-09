@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="105dp"
+    android:layout_height="110dp"
     android:layout_margin="8dp"
     android:padding="16dp"
     app:cardElevation="4dp">
@@ -44,6 +44,8 @@
             android:layout_marginEnd="12dp"
             android:layout_marginTop="8dp"
             android:textSize="13sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             app:layout_constraintStart_toEndOf="@id/bookCover"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bookTitle"
@@ -62,8 +64,7 @@
             android:ellipsize="end"
             app:layout_constraintTop_toBottomOf="@id/bookAuthors"
             app:layout_constraintStart_toEndOf="@id/bookCover"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Something1 safafdddsfdkhsgldhljsdghsdjlgdshgsd jlhdsjghsd jlgshg jdlsgh ljgdhsljhddsgdgsdgskčgh sdgkčdshgs lgs"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
