@@ -23,12 +23,10 @@ abstract class BaseActivity : AppCompatActivity(), BaseMvp.View {
     private lateinit var presenter: BaseMvp.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(layoutResourceId)
+        AndroidInjection.inject(this)
         presenter = providePresenter()
-
-        initToolbar()
     }
 
     override fun showError(message: String) {
@@ -43,7 +41,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseMvp.View {
         progressBar.hide()
     }
 
-    private fun initToolbar() {
+    protected fun initToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)

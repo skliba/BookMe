@@ -8,6 +8,6 @@ class BooksListPresenter @Inject constructor(
 ) : BooksListMvp.Presenter {
 
     override fun init() {
-        interactor.execute(Unit)
+
     }
 }

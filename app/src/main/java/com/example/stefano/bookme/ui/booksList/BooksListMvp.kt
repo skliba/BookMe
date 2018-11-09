@@ -9,6 +9,6 @@ interface BooksListMvp {
     }
 
     interface Presenter : BaseMvp.Presenter {
-        fun init()
+
     }
 }
