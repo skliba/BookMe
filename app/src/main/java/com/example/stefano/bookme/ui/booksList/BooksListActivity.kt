@@ -8,8 +8,10 @@ import com.example.stefano.bookme.data.models.Book
 import com.example.stefano.bookme.ui.base.BaseActivity
 import com.example.stefano.bookme.ui.base.BaseMvp
 import com.example.stefano.bookme.ui.booksList.adapter.BooksAdapter
+import com.example.stefano.bookme.util.extensions.hide
 import com.example.stefano.bookme.util.extensions.show
 import kotlinx.android.synthetic.main.activity_books_list.*
+import kotlinx.android.synthetic.main.empty_state.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
@@ -29,14 +31,20 @@ class BooksListActivity : BaseActivity(), BooksListMvp.View {
         presenter.init()
     }
 
-    override fun displayList(booksList: List<Book>) {
-        booksRecyclerView.takeIf { booksList.isNotEmpty() }?.show()
-        booksRecyclerView.adapter = BooksAdapter(booksList)
-    }
+    override fun displayList(booksList: List<Book>) = booksRecyclerView
+            .show()
+            .also { booksRecyclerView.adapter = BooksAdapter(booksList) }
+            .also { emptyState.hide() }
 
-    override fun showEmptyState() {
 
-    }
+    override fun showEmptyState() = emptyState
+            .show()
+            .also { booksRecyclerView.hide() }
+            .also {
+                emptyStateDescription.text = getString(R.string.empty_state_description,
+                                                       searchInput.text.toString())
+            }
+
 
     private fun initUi() {
         toolbar.title = getString(R.string.app_name)

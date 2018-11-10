@@ -5,7 +5,7 @@ interface BaseMvp {
     interface View {
         fun showProgress()
         fun hideProgress()
-        fun showError(message: String?)
+        fun showError(message: String)
     }
 
     interface Presenter {

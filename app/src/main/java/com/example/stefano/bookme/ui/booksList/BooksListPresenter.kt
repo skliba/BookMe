@@ -1,19 +1,28 @@
 package com.example.stefano.bookme.ui.booksList
 
 import android.annotation.SuppressLint
+import com.example.stefano.bookme.R
 import com.example.stefano.bookme.data.interactors.BooksListInteractor
+import com.example.stefano.bookme.data.models.EntityType
 import com.example.stefano.bookme.util.extensions.applySchedulers
+import com.example.stefano.bookme.util.managers.StringManager
 import com.jakewharton.rxrelay2.PublishRelay
+import io.reactivex.Observable
 import timber.log.Timber
+import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+private const val DEBOUNCE_PERIOD_SECONDS = 1L
+
 class BooksListPresenter @Inject constructor(
         private val view: BooksListMvp.View,
-        private val interactor: BooksListInteractor
+        private val interactor: BooksListInteractor,
+        private val stringManager: StringManager
 ) : BooksListMvp.Presenter {
 
-    private val resultSubject = PublishRelay.create<String>()
+    private var resultSubject = PublishRelay.create<String>()
+    private lateinit var data: EntityType
 
     override fun init() {
         initResultSubject()
@@ -22,22 +31,35 @@ class BooksListPresenter @Inject constructor(
     @SuppressLint("CheckResult")
     private fun initResultSubject() {
         resultSubject
-                .debounce(1, TimeUnit.SECONDS)
+                .debounce(DEBOUNCE_PERIOD_SECONDS, TimeUnit.SECONDS)
                 .distinctUntilChanged()
                 .switchMap { interactor.execute(it) }
                 .applySchedulers()
                 .subscribe({
+                               data = it
                                view.hideProgress()
-                               if (it.items != null) {
-                                   view.displayList(it.items)
-                               } else {
-                                   view.showEmptyState()
-                               }
-                           },
-                           {
-                               Timber.e("$it")
-                           })
+                               val books = it.items
+                               if (books != null) view.displayList(books)
+                               else view.showEmptyState()
+                           }, ::handleException)
 
+    }
+
+    private fun handleException(throwable: Throwable) {
+        //We need to reinitialize the publish relay here because the observable gets completed after onError gets called.
+        initResultSubject()
+        Timber.e("$throwable")
+
+        val message = when (throwable) {
+            is UnknownHostException -> stringManager.getString(R.string.unknownHostException)
+            else                    -> throwable.takeIf { it.message != null }?.message
+                    ?: stringManager.getString(R.string.unknownError)
+        }
+
+        view.apply {
+            hideProgress()
+            showError(message)
+        }
     }
 
     override fun onInputTextChanged(query: String) {
