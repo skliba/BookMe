@@ -6,4 +6,6 @@
 
     <color name="white100">#FFFFFF</color>
     <color name="black100">#000000</color>
+    <color name="black20">#20000000</color>
+    <color name="transparent">#00000000</color>
 </resources>

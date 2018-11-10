@@ -33,7 +33,11 @@ data class SaleInformation(
 
 data class ImageLinks(
         @field:Json(name = "smallThumbnail") val smallThumbnail: String,
-        @field:Json(name = "thumbnail") val thumbnail: String
+        @field:Json(name = "thumbnail") val thumbnail: String,
+        @field:Json(name = "small") val smallImage: String,
+        @field:Json(name = "medium") val mediumImage: String,
+        @field:Json(name = "large") val largeImage: String,
+        @field:Json(name = "extraLarge") val extraLargeImage: String
 )
 
 data class BookPrice(

@@ -8,9 +8,11 @@ interface BooksListMvp {
     interface View : BaseMvp.View {
         fun displayList(booksList: List<Book>)
         fun showEmptyState()
+        fun showBookDetails(bookId: String)
     }
 
     interface Presenter : BaseMvp.Presenter {
         fun onInputTextChanged(query: String)
+        fun onBookClicked(bookId: String)
     }
 }

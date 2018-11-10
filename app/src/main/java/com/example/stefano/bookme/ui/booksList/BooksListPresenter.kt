@@ -37,43 +37,42 @@ class BooksListPresenter @Inject constructor(
         }
     }
 
-    override fun cancel() {
-        compositeDisposable.clear()
-    }
+    override fun onBookClicked(bookId: String) = view.showBookDetails(bookId)
+    override fun cancel() = compositeDisposable.clear()
 
     @SuppressLint("CheckResult")
-    private fun initResultSubject() {
-        resultSubject
-                .debounce(DEBOUNCE_PERIOD_SECONDS, TimeUnit.SECONDS)
-                .distinctUntilChanged()
-                .switchMap { interactor.execute(it) }
-                .applySchedulers()
-                .subscribe({
-                               data = it
-                               view.hideProgress()
-                               val books = it.items
-                               if (books != null) view.displayList(books)
-                               else view.showEmptyState()
-                           }, ::handleException)
-                .addToCompositeDisposable(compositeDisposable)
+    private fun initResultSubject() = resultSubject
+            .debounce(DEBOUNCE_PERIOD_SECONDS, TimeUnit.SECONDS)
+            .distinctUntilChanged()
+            .switchMap { interactor.execute(it) }
+            .applySchedulers()
+            .subscribe(::handleResult, ::handleException)
+            .addToCompositeDisposable(compositeDisposable)
 
+    private fun handleResult(it: EntityType) {
+        data = it
+        val books = it.items
+        when (books) {
+            null -> view.showEmptyState()
+            else -> view.displayList(books)
+        }.also { view.hideProgress() }
     }
 
     private fun handleException(throwable: Throwable) {
         //We need to reinitialize the publish relay here because the observable gets completed after onError gets called.
         initResultSubject()
-        Timber.e("$throwable")
 
         val message = when (throwable) {
             is UnknownHostException -> stringManager.getString(R.string.unknownHostException)
-            else                    -> throwable
-                    .takeIf { it.message != null }?.message
+            else                    -> throwable.takeIf { it.message != null }?.message
                     ?: stringManager.getString(R.string.unknownError)
         }
 
         view.apply {
             hideProgress()
             showError(message)
+        }.also {
+            Timber.e("$throwable")
         }
     }
 }
