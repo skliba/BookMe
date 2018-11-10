@@ -10,9 +10,9 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = arrayOf(
         AndroidSupportInjectionModule::class,
+        ActivityBuilder::class,
         ApiModule::class,
-        ProvidersModule::class,
-        ActivityBuilder::class
+        ProvidersModule::class
 ))
 interface AppComponent {
 
@@ -27,5 +27,5 @@ interface AppComponent {
         fun build(): AppComponent
     }
 
-    fun inject(app : BookApplication)
+    fun inject(app: BookApplication)
 }

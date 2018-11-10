@@ -1,7 +1,10 @@
 package com.example.stefano.bookme.di
 
+import android.content.Context
 import com.example.stefano.bookme.BuildConfig
 import com.example.stefano.bookme.data.network.ApiService
+import com.example.stefano.bookme.data.network.MoshiProvider
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -22,6 +25,10 @@ class ApiModule {
 
     @Provides
     @Singleton
+    internal fun moshi(): Moshi = MoshiProvider.moshi
+
+    @Provides
+    @Singleton
     fun okHttpClient(): OkHttpClient {
 
         val okHttpBuilder = OkHttpClient.Builder()
@@ -29,19 +36,11 @@ class ApiModule {
                 .readTimeout(READ_TIMEOUT_VALUE, TimeUnit.SECONDS)
                 .writeTimeout(WRITE_TIMEOUT_VALUE, TimeUnit.SECONDS)
 
-        // This is here because Huawei, Sony, Lenovo and other less popular manufacturers tend to hide the debug channel in the logcat.
-        // This way, we manually move the logging channel to "warn" using Timber library
+
         if (BuildConfig.DEBUG) {
-
-            val logger: HttpLoggingInterceptor.Logger = HttpLoggingInterceptor.Logger {
-                Timber.tag("OkHttp").w(it)
-            }
-
-            okHttpBuilder.addInterceptor(HttpLoggingInterceptor(logger)
-                                                 .apply { level = HttpLoggingInterceptor.Level.BODY })
-        } else {
-            okHttpBuilder.addInterceptor(
-                    HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+            okHttpBuilder.addInterceptor(HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
+                Timber.tag("OkHttp").i(it)
+            }).apply { level = HttpLoggingInterceptor.Level.BODY })
         }
 
         return okHttpBuilder.build()
@@ -49,15 +48,15 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun apiService(retrofit: Retrofit): ApiService = retrofit
-            .create(ApiService::class.java)
+    fun apiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 
     @Provides
     @Singleton
-    fun retrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_API_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(okHttpClient)
-            .build()
+    fun retrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit =
+            Retrofit.Builder()
+                    .baseUrl(BuildConfig.BASE_API_URL)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .client(okHttpClient)
+                    .build()
 }

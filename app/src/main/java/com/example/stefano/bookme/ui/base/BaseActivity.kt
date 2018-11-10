@@ -23,16 +23,14 @@ abstract class BaseActivity : AppCompatActivity(), BaseMvp.View {
     private lateinit var presenter: BaseMvp.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(layoutResourceId)
+        AndroidInjection.inject(this)
         presenter = providePresenter()
-
-        initToolbar()
     }
 
     override fun showError(message: String) {
-        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show()
     }
 
     override fun showProgress() {
@@ -43,7 +41,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseMvp.View {
         progressBar.hide()
     }
 
-    private fun initToolbar() {
+    protected fun initToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -55,5 +53,10 @@ abstract class BaseActivity : AppCompatActivity(), BaseMvp.View {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = getColorCompat(R.color.colorPrimaryDark)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.cancel()
     }
 }

@@ -93,6 +93,7 @@ ext {
     rxKotlinVersion = "2.2.0"
     rxAndroidVersion = "2.0.1"
     rxJavaVersion = "2.2.3"
+    rxRelayVersion = "2.1.0"
     timberVersion = "4.7.1"
 }
 
@@ -108,6 +109,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion"
+    implementation "com.jakewharton.rxrelay2:rxrelay:$rxRelayVersion"
 
     //Support
     implementation "com.android.support:appcompat-v7:$supportVersion"
