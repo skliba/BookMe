@@ -30,6 +30,13 @@ class BooksListPresenter @Inject constructor(
         initResultSubject()
     }
 
+    override fun onInputTextChanged(query: String) {
+        if (query.isNotEmpty()) {
+            view.showProgress()
+            resultSubject.accept(query)
+        }
+    }
+
     override fun cancel() {
         compositeDisposable.clear()
     }
@@ -59,20 +66,14 @@ class BooksListPresenter @Inject constructor(
 
         val message = when (throwable) {
             is UnknownHostException -> stringManager.getString(R.string.unknownHostException)
-            else                    -> throwable.takeIf { it.message != null }?.message
+            else                    -> throwable
+                    .takeIf { it.message != null }?.message
                     ?: stringManager.getString(R.string.unknownError)
         }
 
         view.apply {
             hideProgress()
             showError(message)
-        }
-    }
-
-    override fun onInputTextChanged(query: String) {
-        if (query.isNotEmpty()) {
-            view.showProgress()
-            resultSubject.accept(query)
         }
     }
 }
