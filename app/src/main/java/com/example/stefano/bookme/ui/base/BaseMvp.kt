@@ -10,5 +10,6 @@ interface BaseMvp {
 
     interface Presenter {
         fun init()
+        fun cancel()
     }
 }

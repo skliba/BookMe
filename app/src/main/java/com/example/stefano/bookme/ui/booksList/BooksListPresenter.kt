@@ -4,10 +4,11 @@ import android.annotation.SuppressLint
 import com.example.stefano.bookme.R
 import com.example.stefano.bookme.data.interactors.BooksListInteractor
 import com.example.stefano.bookme.data.models.EntityType
+import com.example.stefano.bookme.util.extensions.addToCompositeDisposable
 import com.example.stefano.bookme.util.extensions.applySchedulers
 import com.example.stefano.bookme.util.managers.StringManager
 import com.jakewharton.rxrelay2.PublishRelay
-import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
@@ -22,10 +23,15 @@ class BooksListPresenter @Inject constructor(
 ) : BooksListMvp.Presenter {
 
     private var resultSubject = PublishRelay.create<String>()
+    private val compositeDisposable = CompositeDisposable()
     private lateinit var data: EntityType
 
     override fun init() {
         initResultSubject()
+    }
+
+    override fun cancel() {
+        compositeDisposable.clear()
     }
 
     @SuppressLint("CheckResult")
@@ -42,6 +48,7 @@ class BooksListPresenter @Inject constructor(
                                if (books != null) view.displayList(books)
                                else view.showEmptyState()
                            }, ::handleException)
+                .addToCompositeDisposable(compositeDisposable)
 
     }
 

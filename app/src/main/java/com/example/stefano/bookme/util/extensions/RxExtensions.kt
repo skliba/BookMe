@@ -4,6 +4,8 @@ import com.example.stefano.bookme.data.exceptions.ApiException
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 fun <T> Single<T>.applySchedulers(): Single<T> = compose {
@@ -32,4 +34,5 @@ fun <T> Observable<T>.handleErrors(): Observable<T> = compose<T> { request ->
     }
 }
 
-
+fun Disposable.addToCompositeDisposable(compositeDisposable: CompositeDisposable) =
+        compositeDisposable.add(this)

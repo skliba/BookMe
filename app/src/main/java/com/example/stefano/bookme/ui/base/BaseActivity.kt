@@ -30,7 +30,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseMvp.View {
     }
 
     override fun showError(message: String) {
-        Snackbar.make(findViewById(R.id.root), message, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show()
     }
 
     override fun showProgress() {
@@ -53,5 +53,10 @@ abstract class BaseActivity : AppCompatActivity(), BaseMvp.View {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = getColorCompat(R.color.colorPrimaryDark)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.cancel()
     }
 }

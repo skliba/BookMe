@@ -20,7 +20,6 @@ class BooksListActivity : BaseActivity(), BooksListMvp.View {
     @Inject lateinit var presenter: BooksListMvp.Presenter
 
     override val layoutResourceId: Int = R.layout.activity_books_list
-
     override fun providePresenter(): BaseMvp.Presenter = presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,30 +35,24 @@ class BooksListActivity : BaseActivity(), BooksListMvp.View {
             .also { booksRecyclerView.adapter = BooksAdapter(booksList) }
             .also { emptyState.hide() }
 
-
     override fun showEmptyState() = emptyState
             .show()
             .also { booksRecyclerView.hide() }
             .also {
-                emptyStateDescription.text = getString(R.string.empty_state_description,
-                                                       searchInput.text.toString())
+                emptyStateDescription.text =
+                        getString(R.string.empty_state_description, searchInput.text.toString())
             }
-
 
     private fun initUi() {
         toolbar.title = getString(R.string.app_name)
         initToolbar()
     }
 
-    private fun attachListeners() {
-        searchInput.addTextChangedListener(object : TextWatcher {
+    private fun attachListeners() = searchInput.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(editable: Editable) = presenter.onInputTextChanged(
+                searchInput.text.toString().trim())
 
-            override fun afterTextChanged(editable: Editable) {
-                presenter.onInputTextChanged(searchInput.text.toString().trim())
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
-    }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    })
 }
