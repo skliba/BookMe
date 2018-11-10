@@ -4,10 +4,6 @@ import com.squareup.moshi.Moshi
 
 object MoshiProvider {
 
-    val moshi: Moshi
-
-    init {
-        moshi = Moshi.Builder()
-                .build()
-    }
+    val moshi: Moshi = Moshi.Builder()
+            .build()
 }
