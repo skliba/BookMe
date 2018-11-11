@@ -14,4 +14,12 @@ abstract class BaseAdapter<T : Any, VH : RecyclerView.ViewHolder>(
                 items = list
                 notifyDataSetChanged()
             }
+
+    fun append(books: List<T>) {
+        //Creates a local copy of items
+        val itemsCopy = items.toMutableList()
+        itemsCopy.addAll(itemsCopy.size, books)
+        items = itemsCopy
+        notifyDataSetChanged()
+    }
 }

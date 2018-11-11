@@ -12,6 +12,7 @@ import com.example.stefano.bookme.ui.booksList.adapter.BooksAdapter
 import com.example.stefano.bookme.util.extensions.hide
 import com.example.stefano.bookme.util.extensions.show
 import com.example.stefano.bookme.util.extensions.startActivity
+import com.paginate.Paginate
 import kotlinx.android.synthetic.main.activity_books_list.*
 import kotlinx.android.synthetic.main.empty_state.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -21,26 +22,31 @@ const val BOOK_ID = "BookId"
 
 class BooksListActivity : BaseActivity(), BooksListMvp.View {
 
-    @Inject lateinit var presenter: BooksListMvp.Presenter
+    private val bookClickCallback: (String) -> Unit = { bookId -> presenter.onBookClicked(bookId) }
+    private val booksAdapter = BooksAdapter(clickListener = bookClickCallback)
 
     override val layoutResourceId: Int = R.layout.activity_books_list
     override fun providePresenter(): BaseMvp.Presenter = presenter
 
-    private val bookClickCallback: (String) -> Unit = { bookId -> presenter.onBookClicked(bookId) }
-
-    private val booksAdapter = BooksAdapter(clickListener = bookClickCallback)
+    @Inject lateinit var presenter: BooksListMvp.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initUi()
         attachListeners()
         presenter.init()
     }
 
-    override fun displayList(booksList: List<Book>) = booksRecyclerView
-            .show()
+    override fun displayList(
+            booksList: List<Book>,
+            callbacks: Paginate.Callbacks
+    ) = booksRecyclerView.show()
             .also { booksAdapter.update(booksList) }
             .also { emptyState.hide() }
+            .also {
+                Paginate.with(booksRecyclerView, callbacks)
+                        .addLoadingListItem(false)
+                        .build()
+            }
 
     override fun showEmptyState() = emptyState
             .show()
@@ -50,21 +56,30 @@ class BooksListActivity : BaseActivity(), BooksListMvp.View {
                         getString(R.string.empty_state_description, searchInput.text.toString())
             }
 
+    override fun addMoreItems(books: List<Book>) {
+        booksAdapter.append(books)
+    }
+
+    override fun hideRecyclerViewLoading() {
+        booksAdapter.removeLoading()
+    }
+
     override fun showBookDetails(bookId: String) {
         val bundle = Bundle()
         bundle.putString(BOOK_ID, bookId)
         startActivity<BookDetailsActivity>(bundle)
     }
 
-    private fun initUi() {
+    override fun initUi() {
         toolbar.title = getString(R.string.app_name)
         initToolbar()
         booksRecyclerView.adapter = booksAdapter
     }
 
     private fun attachListeners() = searchInput.addTextChangedListener(object : TextWatcher {
-        override fun afterTextChanged(editable: Editable) = presenter.onInputTextChanged(
-                searchInput.text.toString().trim())
+        override fun afterTextChanged(editable: Editable) {
+            presenter.onInputTextChanged(searchInput.text.toString().trim())
+        }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}

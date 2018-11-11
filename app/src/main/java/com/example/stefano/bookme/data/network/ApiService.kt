@@ -13,6 +13,8 @@ interface ApiService {
     @GET("volumes")
     fun findVolumesByTitle(
             @Query("q") title: String,
+            @Query("startIndex") pageNumber: Int = 0,
+            @Query("maxResults") pageSize: Int = 40,
             @Query("printType") printType: String = "books"
     ): Observable<EntityType>
 

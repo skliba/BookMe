@@ -23,6 +23,13 @@ class BooksAdapter(
         viewHolder.bindItem(items[position], clickListener)
     }
 
+    // items.size returns the actual amount of items in the list, whereas the indexes start with 0
+    // we need to subtract 1 in order to get the last index in the list, and remove that one also hence the -2
+    fun removeLoading() {
+        items = items.subList(0, items.size - 2)
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItem(book: Book, clickListener: (String) -> Unit) = itemView.apply {
