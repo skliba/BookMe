@@ -27,12 +27,12 @@ class BookDetailsPresenter @Inject constructor(
                 .addToCompositeDisposable(compositeDisposable)
     }
 
-    @Suppress("IMPLICIT_CAST_TO_ANY")
     private fun handleResponse(book: Book?) {
         when (book) {
             null -> view.showError(stringManager.getString(R.string.unknownError))
             else -> populateScreenWithData(book)
-        }.also { view.hideProgress() }
+        }
+        view.hideProgress()
     }
 
     private fun handleException(throwable: Throwable) {
@@ -46,9 +46,7 @@ class BookDetailsPresenter @Inject constructor(
         view.apply {
             hideProgress()
             showError(message)
-        }.also {
-            Timber.e("$throwable")
-        }
+        }.also { Timber.e("$throwable") }
     }
 
     private fun populateScreenWithData(book: Book) = book.apply {
