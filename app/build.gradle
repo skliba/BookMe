@@ -95,6 +95,7 @@ ext {
     rxJavaVersion = "2.2.3"
     rxRelayVersion = "2.1.0"
     timberVersion = "4.7.1"
+    paginateVersion = "0.5.1"
 }
 
 dependencies {
@@ -150,6 +151,9 @@ dependencies {
 
     //UI
     implementation 'com.eftimoff:android-pathview:1.0.8@aar'
+
+    //Pagination
+    implementation "com.github.markomilos:paginate:$paginateVersion"
 
     //Permissions
     implementation "pub.devrel:easypermissions:$easyPermissionsVersion"

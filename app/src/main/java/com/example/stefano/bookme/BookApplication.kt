@@ -3,7 +3,6 @@ package com.example.stefano.bookme
 import android.app.Activity
 import android.os.StrictMode
 import android.support.multidex.MultiDexApplication
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDelegate
 import com.example.stefano.bookme.di.AppComponent
 import com.example.stefano.bookme.di.DaggerAppComponent
