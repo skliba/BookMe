@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">BookMe</string>
+    <string name="search_hint">Book name you wish to search for</string>
+    <string name="empty_state_title">No content</string>
+    <string name="empty_state_description">It appears that there are no books in the library that matches: %s</string>
+
+
+    <!-- Api Errors -->
+    <string name="unknownHostException">"It appears that you're disconnected, could you please check your internet connection, and try again."</string>
+
+    <string name="unknownError">"Unknown error has occurred."</string>
+    <string name="book_description_title">Description</string>
+    <string name="book_authors_title">Authors</string>
+    <string name="book_general_information_title">General Information</string>
+    <string name="book_purchase_information_title">Purchase Information</string>
+    <string name="page_information">Page numbers: %s</string>
+    <string name="no_known_authors">No known authors</string>
+    <string name="publisher_and_date">Publisher: %s | %s</string>
+    <string name="sale_information">Sale information</string>
+    <string name="list_price">List price: %s</string>
+    <string name="retail_price">Retail price: %s</string>
+    <string name="purchaseLink">Purchase link: %s</string>
+    <string name="no_publisher_available">No publisher available</string>
+    <string name="no_page_numbers_available">No page numbers available</string>
+    <string name="purchase_link">Purchase link: %s</string>
 </resources>

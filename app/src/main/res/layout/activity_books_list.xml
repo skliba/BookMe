@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white100"
+    android:animateLayoutChanges="true"
+    tools:context=".ui.booksList.BooksListActivity">
+
+    <include layout="@layout/toolbar"/>
+
+    <include layout="@layout/progress"/>
+
+    <EditText
+        android:id="@+id/searchInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="@string/search_hint"
+        android:textSize="16sp"
+        android:inputType="textCapWords"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:ignore="UnknownIdInLayout"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/booksRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchInput"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:ignore="UnknownIdInLayout"/>
+
+    <include
+        layout="@layout/empty_state"
+        android:visibility="gone"/>
+
+</android.support.constraint.ConstraintLayout>
