@@ -29,6 +29,7 @@ class BooksListActivity : BaseActivity(), BooksListMvp.View {
     override fun providePresenter(): BaseMvp.Presenter = presenter
 
     @Inject lateinit var presenter: BooksListMvp.Presenter
+    private var paginate: Paginate? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +44,8 @@ class BooksListActivity : BaseActivity(), BooksListMvp.View {
             .also { booksAdapter.update(booksList) }
             .also { emptyState.hide() }
             .also {
-                Paginate.with(booksRecyclerView, callbacks)
-                        .addLoadingListItem(false)
+                paginate = Paginate.with(booksRecyclerView, callbacks)
+                        .addLoadingListItem(true)
                         .build()
             }
 
@@ -78,6 +79,9 @@ class BooksListActivity : BaseActivity(), BooksListMvp.View {
 
     private fun attachListeners() = searchInput.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(editable: Editable) {
+            if (paginate != null) {
+                paginate!!.unbind()
+            }
             presenter.onInputTextChanged(searchInput.text.toString().trim())
         }
 

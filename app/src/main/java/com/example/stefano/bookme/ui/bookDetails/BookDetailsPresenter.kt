@@ -63,21 +63,13 @@ class BookDetailsPresenter @Inject constructor(
     }
 
     private fun handleSaleInformation(saleInformation: SaleInformation?) {
-        if (saleInformation != null) {
-            if (saleInformation.listPrice != null) {
-                view.displayListPrice(stringManager.getString(R.string.list_price,
-                                                              "${saleInformation.listPrice.amount} ${saleInformation.listPrice.currency}"))
-            }
-
-            if (saleInformation.retailPrice != null) {
-                view.displayRetailPrice(stringManager.getString(R.string.retail_price,
-                                                                "${saleInformation.retailPrice.amount} ${saleInformation.retailPrice.currency} "))
-            }
-
-            if (saleInformation.buyLink != null) {
-                view.displayBuyLink(
-                        stringManager.getString(R.string.purchase_link, saleInformation.buyLink))
-            }
+        if (saleInformation?.listPrice != null && saleInformation.retailPrice != null && saleInformation.buyLink != null) {
+            view.displayListPrice(stringManager.getString(R.string.list_price,
+                                                          "${saleInformation.listPrice.amount} ${saleInformation.listPrice.currency}"))
+            view.displayRetailPrice(stringManager.getString(R.string.retail_price,
+                                                            "${saleInformation.retailPrice.amount} ${saleInformation.retailPrice.currency} "))
+            view.displayBuyLink(stringManager.getString(R.string.purchase_link,
+                                                        "\n${saleInformation.buyLink}"))
         } else {
             view.hideSaleInformation()
         }

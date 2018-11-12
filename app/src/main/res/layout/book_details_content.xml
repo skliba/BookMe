@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="16dp">
+    android:paddingBottom="16dp">
 
     <android.support.constraint.Group
         android:id="@+id/bookDetailsContent"
@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-        android:textColor="@color/black100"
+        android:textColor="@color/colorAccent"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
@@ -49,25 +49,25 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_margin="16dp"
+        android:background="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/description"
-        android:background="@color/black20"/>
+        app:layout_constraintTop_toBottomOf="@id/description"/>
 
     <TextView
         android:id="@+id/authorsTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-        android:textColor="@color/black100"
+        android:textColor="@color/colorAccent"
+        android:text="@string/book_authors_title"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/descriptionDivider"
-        android:text="@string/book_authors_title"/>
+        app:layout_constraintTop_toBottomOf="@id/descriptionDivider"/>
 
     <TextView
         android:id="@+id/authors"
@@ -86,15 +86,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-        android:textColor="@color/black100"
+        android:textColor="@color/colorAccent"
+        android:text="@string/book_general_information_title"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/authors"
-        android:text="@string/book_general_information_title"/>
+        app:layout_constraintTop_toBottomOf="@id/authors"/>
 
     <TextView
         android:id="@+id/numberOfPages"
@@ -126,7 +126,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black100"
+        android:textColor="@color/colorAccent"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
@@ -141,7 +141,8 @@
         android:layout_width="1dp"
         android:layout_height="100dp"
         android:layout_marginTop="16dp"
-        android:background="@color/black20"
+        android:layout_marginBottom="16dp"
+        android:background="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/purchaseInformationTitle"/>
@@ -183,9 +184,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:autoLink="web"
         app:layout_constraintStart_toEndOf="@id/purchaseInformationDivider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/purchaseInformationTitle"
-        />
+        app:layout_constraintTop_toBottomOf="@id/purchaseInformationTitle"/>
 
 </android.support.constraint.ConstraintLayout>
