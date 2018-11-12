@@ -8,7 +8,6 @@
             android:fromAlpha="1"
             android:toAlpha="0"/>
 
-
     <scale
             android:interpolator="@android:interpolator/accelerate_decelerate"
             android:fromXScale="1"
@@ -16,7 +15,5 @@
             android:fromYScale="1"
             android:toYScale="0"
             android:pivotX="0"
-            android:pivotY="0%"
-            />
-
+            android:pivotY="0%"/>
 </set>

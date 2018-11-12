@@ -27,6 +27,7 @@ class BookDetailsPresenter @Inject constructor(
                 .addToCompositeDisposable(compositeDisposable)
     }
 
+    @Suppress("IMPLICIT_CAST_TO_ANY")
     private fun handleResponse(book: Book?) {
         when (book) {
             null -> view.showError(stringManager.getString(R.string.unknownError))

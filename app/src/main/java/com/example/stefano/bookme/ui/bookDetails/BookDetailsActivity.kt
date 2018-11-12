@@ -11,7 +11,6 @@ import com.example.stefano.bookme.ui.booksList.BOOK_ID
 import com.example.stefano.bookme.util.extensions.hide
 import kotlinx.android.synthetic.main.activity_book_details.*
 import kotlinx.android.synthetic.main.book_details_content.*
-import java.lang.RuntimeException
 import javax.inject.Inject
 
 class BookDetailsActivity : BaseActivity(), BookDetailsMvp.View {

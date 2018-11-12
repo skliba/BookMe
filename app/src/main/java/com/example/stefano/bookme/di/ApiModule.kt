@@ -1,6 +1,5 @@
 package com.example.stefano.bookme.di
 
-import android.content.Context
 import com.example.stefano.bookme.BuildConfig
 import com.example.stefano.bookme.data.network.ApiService
 import com.example.stefano.bookme.data.network.MoshiProvider

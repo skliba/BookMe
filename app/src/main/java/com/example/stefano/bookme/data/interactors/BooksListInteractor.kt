@@ -6,7 +6,6 @@ import com.example.stefano.bookme.data.network.Interactor
 import com.example.stefano.bookme.util.extensions.applySchedulers
 import com.example.stefano.bookme.util.extensions.handleErrors
 import io.reactivex.Observable
-import org.w3c.dom.Entity
 import javax.inject.Inject
 
 interface BooksListInteractor : Interactor<String, Observable<EntityType>> {

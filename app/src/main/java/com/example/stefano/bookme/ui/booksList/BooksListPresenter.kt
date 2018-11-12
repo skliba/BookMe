@@ -65,7 +65,6 @@ class BooksListPresenter @Inject constructor(
     }
 
     override fun onBookClicked(bookId: String) = view.showBookDetails(bookId)
-    override fun cancel() = compositeDisposable.clear()
 
     @SuppressLint("CheckResult")
     private fun initResultSubject() = resultSubject
@@ -115,4 +114,6 @@ class BooksListPresenter @Inject constructor(
             showError(message)
         }.also { Timber.e("$throwable") }
     }
+
+    override fun cancel() = compositeDisposable.clear()
 }

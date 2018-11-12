@@ -57,13 +57,8 @@ class BooksListActivity : BaseActivity(), BooksListMvp.View {
                         getString(R.string.empty_state_description, searchInput.text.toString())
             }
 
-    override fun addMoreItems(books: List<Book>) {
-        booksAdapter.append(books)
-    }
-
-    override fun hideRecyclerViewLoading() {
-        booksAdapter.removeLoading()
-    }
+    override fun addMoreItems(books: List<Book>) = booksAdapter.append(books)
+    override fun hideRecyclerViewLoading() = booksAdapter.removeLoading()
 
     override fun showBookDetails(bookId: String) {
         val bundle = Bundle()

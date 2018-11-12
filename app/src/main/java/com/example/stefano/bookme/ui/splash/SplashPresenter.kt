@@ -7,7 +7,7 @@ class SplashPresenter @Inject constructor(
 ) : SplashMvp.Presenter {
 
     override fun init() {
-
+        //Nothing here
     }
 
     override fun onAnimationEnd() {
@@ -15,6 +15,6 @@ class SplashPresenter @Inject constructor(
     }
 
     override fun cancel() {
-
+        //Nothing here
     }
 }
