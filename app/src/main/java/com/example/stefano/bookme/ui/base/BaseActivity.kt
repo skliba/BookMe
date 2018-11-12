@@ -48,10 +48,10 @@ abstract class BaseActivity : AppCompatActivity(), BaseMvp.View {
         toolbar.navigationIcon = getDrawableCompat(R.drawable.ic_back)
         toolbar.setNavigationOnClickListener { onBackPressed() }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = getColorCompat(R.color.colorPrimaryDark)
+        window.apply {
+            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            statusBarColor = getColorCompat(R.color.colorPrimaryDark)
         }
     }
 
